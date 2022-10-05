@@ -1,5 +1,6 @@
 mod app;
 mod db;
+mod entity;
 mod feed;
 mod utils;
 
