@@ -21,7 +21,7 @@ impl MigrationTrait for Migration {
                             .primary_key(),
                     )
                     .col(ColumnDef::new(Feed::Title).string().not_null())
-                    .col(ColumnDef::new(Feed::Url).string().not_null())
+                    .col(ColumnDef::new(Feed::Url).string().not_null().unique_key())
                     .col(
                         ColumnDef::new(Feed::CreatedAt)
                             .timestamp_with_time_zone()
