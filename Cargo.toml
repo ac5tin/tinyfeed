@@ -9,6 +9,7 @@ edition = "2021"
 # actix
 actix-web = "4"
 actix = "0.13"
+actix-interop = "0.4"
 
 # feed
 rss = "2"
