@@ -6,3 +6,25 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+# actix
+actix-web = "4"
+
+# feed
+rss = "2"
+
+# logging
+log = "0.4"
+env_logger = "0.9"
+
+
+# database ORM
+sea-orm = { version = "0.9", features = [
+    "runtime-actix-native-tls",
+    "sqlx-sqlite",
+] }
+
+migration = { path = "migration" }
+
+
+# error handling
+anyhow = "1"
