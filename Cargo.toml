@@ -30,3 +30,6 @@ migration = { path = "migration" }
 
 # error handling
 anyhow = "1"
+
+# reqwest
+reqwest = { version = "0.11.12", features = ["json"] }
