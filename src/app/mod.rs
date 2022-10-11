@@ -12,6 +12,7 @@ use sea_orm::DatabaseConnection;
 use crate::feed as feeder;
 
 use self::feed::create_feed;
+use self::feed::get_feed;
 use self::feed::get_feed_list;
 mod feed;
 
@@ -46,7 +47,8 @@ fn routes(cfg: &mut ServiceConfig) {
             web::scope("/v1").service(
                 web::scope("/feed")
                     .service(create_feed)
-                    .service(get_feed_list),
+                    .service(get_feed_list)
+                    .service(get_feed),
             ),
         ),
     );

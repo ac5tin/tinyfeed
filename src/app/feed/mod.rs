@@ -1,7 +1,7 @@
 use actix_web::{
     error::ErrorInternalServerError,
     get, post,
-    web::{Data, Json, Query},
+    web::{Data, Json, Path, Query},
     Error, HttpResponse,
 };
 use log::error;
@@ -59,4 +59,27 @@ pub async fn get_feed_list(
         .await
         .map_err(ErrorInternalServerError)?;
     Ok(HttpResponse::Ok().json(json!({"status":"ok","feeds": feeds})))
+}
+
+#[derive(Deserialize)]
+pub struct GetFeedQuery {
+    limit: u64,
+    offset: u64,
+}
+
+#[get("/{feed_id}")]
+pub async fn get_feed(
+    state: Data<AppState>,
+    req: Query<GetFeedQuery>,
+    feed_id: Path<u32>,
+) -> Result<HttpResponse, Error> {
+    let posts = feed::query::get_feed_posts(
+        feed_id.into_inner() as i32,
+        req.offset,
+        req.limit,
+        &state.db,
+    )
+    .await
+    .map_err(ErrorInternalServerError)?;
+    Ok(HttpResponse::Ok().json(json!({"status":"ok","posts": posts})))
 }
