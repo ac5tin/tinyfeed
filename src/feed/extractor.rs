@@ -1,5 +1,6 @@
 use actix::prelude::*;
 use actix_interop::FutureInterop;
+use log::debug;
 use rss::{Channel, Item};
 
 #[derive(Message, Clone)]
@@ -23,6 +24,7 @@ impl Handler<ExtractFeedRequest> for Extractor {
     type Result = ResponseActFuture<Self, Result<Vec<Item>, anyhow::Error>>;
 
     fn handle(&mut self, msg: ExtractFeedRequest, _: &mut Self::Context) -> Self::Result {
+        debug!("Extracting from feed: {}", msg.0);
         async move {
             let content = reqwest::get(msg.0).await?.bytes().await?;
             let channel = Channel::read_from(&content[..])?;
