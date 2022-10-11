@@ -12,6 +12,7 @@ use sea_orm::DatabaseConnection;
 use crate::feed as feeder;
 
 use self::feed::create_feed;
+use self::feed::get_feed_list;
 mod feed;
 
 pub struct AppState {
@@ -41,7 +42,12 @@ pub async fn start(db: DatabaseConnection) -> std::io::Result<()> {
 fn routes(cfg: &mut ServiceConfig) {
     cfg.service(web::resource("/ping").to(ping));
     cfg.service(
-        web::scope("/api")
-            .service(web::scope("/v1").service(web::scope("/feed").service(create_feed))),
+        web::scope("/api").service(
+            web::scope("/v1").service(
+                web::scope("/feed")
+                    .service(create_feed)
+                    .service(get_feed_list),
+            ),
+        ),
     );
 }

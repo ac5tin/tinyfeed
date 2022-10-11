@@ -8,6 +8,7 @@ use sea_orm::{ActiveModelTrait, ColumnTrait, DatabaseConnection, EntityTrait, Qu
 
 use self::extractor::ExtractFeedRequest;
 mod extractor;
+pub mod query;
 
 const REFRESH_INTERVAL: Duration = Duration::from_secs(60 * 15); // 15 minutes
 
