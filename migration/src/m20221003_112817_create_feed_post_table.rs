@@ -28,7 +28,7 @@ impl MigrationTrait for Migration {
                     )
                     .to_owned()
                     .col(ColumnDef::new(Post::Title).string().not_null())
-                    .col(ColumnDef::new(Post::Url).string().not_null())
+                    .col(ColumnDef::new(Post::Url).string().not_null().unique_key())
                     .col(ColumnDef::new(Post::Author).string().not_null())
                     .col(
                         ColumnDef::new(Post::Timestamp)
