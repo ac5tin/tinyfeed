@@ -5,4 +5,4 @@ sea migrate init
 # create new migration
 sea migrate generate create_x_table 
 # generate entity
-sea generate entity -u sqlite://db.sqlite3 -o src/entity -v
+sea generate entity -u sqlite://db.sqlite3 -o src/entity --with-serde both -v
