@@ -1,5 +1,5 @@
 use actix::prelude::*;
-use actix_interop::{with_ctx, FutureInterop};
+use actix_interop::FutureInterop;
 use rss::{Channel, Item};
 
 #[derive(Message, Clone)]

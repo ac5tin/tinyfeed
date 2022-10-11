@@ -86,7 +86,7 @@ impl Handler<CreateFeedRequest> for Feed {
 impl Handler<RefreshFeedRequest> for Feed {
     type Result = ResponseActFuture<Self, Result<(), anyhow::Error>>;
 
-    fn handle(&mut self, _: RefreshFeedRequest, ctx: &mut Self::Context) -> Self::Result {
+    fn handle(&mut self, _: RefreshFeedRequest, _: &mut Self::Context) -> Self::Result {
         async move {
             let conn = with_ctx(|actor: &mut Self, _| actor.conn.clone());
             let feeds = feed::Entity::find()
