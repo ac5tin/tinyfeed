@@ -36,9 +36,9 @@ impl Handler<ExtractFeedRequest> for Extractor {
     }
 }
 
+#[cfg(test)]
 mod tests {
     use actix::Actor;
-    use log::debug;
 
     use super::Extractor;
 
