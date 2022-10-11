@@ -38,6 +38,7 @@ impl Handler<ExtractFeedRequest> for Extractor {
 
 mod tests {
     use actix::Actor;
+    use log::debug;
 
     use super::Extractor;
 
@@ -46,15 +47,29 @@ mod tests {
         env_logger::init();
 
         let ext = Extractor::new().start();
-        let res = ext
-            .send(super::ExtractFeedRequest(
-                "http://feeds.bbci.co.uk/news/rss.xml".to_owned(),
-            ))
-            .await;
-        assert_eq!(res.is_ok(), true);
-        let res = res.unwrap();
-        assert_eq!(res.is_ok(), true);
-        let res = res.unwrap();
-        assert_eq!(res.len() > 0, true);
+        // working rss feed
+        {
+            let res = ext
+                .send(super::ExtractFeedRequest(
+                    "http://feeds.bbci.co.uk/news/rss.xml".to_owned(),
+                ))
+                .await;
+            assert_eq!(res.is_ok(), true);
+            let res = res.unwrap();
+            assert_eq!(res.is_ok(), true);
+            let res = res.unwrap();
+            assert_eq!(res.len() > 0, true);
+        }
+        // non-existent rss feed
+        {
+            let res = ext
+                .send(super::ExtractFeedRequest(
+                    "http://feeds.example.com/rss.xml".to_owned(),
+                ))
+                .await;
+            assert_eq!(res.is_ok(), true);
+            let res = res.unwrap();
+            assert_eq!(res.is_err(), true);
+        }
     }
 }
