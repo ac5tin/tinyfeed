@@ -2652,6 +2652,7 @@ dependencies = [
  "reqwest",
  "rss",
  "sea-orm",
+ "serde",
 ]
 
 [[package]]
