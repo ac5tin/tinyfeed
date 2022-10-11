@@ -6,6 +6,7 @@ mod utils;
 
 #[actix_web::main]
 async fn main() -> Result<(), anyhow::Error> {
+    env_logger::init();
     // create databse connection
     let conn = db::conn::get_conn().await?;
 
