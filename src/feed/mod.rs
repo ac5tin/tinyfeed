@@ -76,6 +76,11 @@ impl Handler<CreateFeedRequest> for Feed {
                 ..Default::default()
             };
             let res = feed::Entity::insert(record).exec(&conn).await?;
+            // refresh feed
+            {
+                let addr = with_ctx(|_: &mut Self, ctx: &mut Self::Context| ctx.address());
+                addr.do_send(RefreshFeedRequest());
+            }
 
             Ok(res.last_insert_id)
         }
