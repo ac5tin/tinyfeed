@@ -35,3 +35,26 @@ impl Handler<ExtractFeedRequest> for Extractor {
         .interop_actor_boxed(self)
     }
 }
+
+mod tests {
+    use actix::Actor;
+
+    use super::Extractor;
+
+    #[actix::test]
+    async fn extract_feed() {
+        env_logger::init();
+
+        let ext = Extractor::new().start();
+        let res = ext
+            .send(super::ExtractFeedRequest(
+                "http://feeds.bbci.co.uk/news/rss.xml".to_owned(),
+            ))
+            .await;
+        assert_eq!(res.is_ok(), true);
+        let res = res.unwrap();
+        assert_eq!(res.is_ok(), true);
+        let res = res.unwrap();
+        assert_eq!(res.len() > 0, true);
+    }
+}
